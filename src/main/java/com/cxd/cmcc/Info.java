@@ -9,9 +9,9 @@ import java.util.Map;
  * @desc
  */
 public enum Info {
-    yjw("18307073787","Y/BGNmwuTXmQ2tRGXNuiTy7izNx0tu3eIPqzz4+EfNd/hewC/4AtGQ\u003d\u003d","易金伟"),
-    ll("15279772652","b59e10c8d911d4bcf06ba61dd0118524","刘梨"),
-    cxd("15170252724","n8bLrAJFjxrHwWYxNfyzQG1yAM5LhMFFHN8HBb4luOe5EFpQKgARzQ==","蔡辛迪")
+//    yjw("18307073787","Y/BGNmwuTXmQ2tRGXNuiTy7izNx0tu3eIPqzz4+EfNd/hewC/4AtGQ\u003d\u003d","易金伟"),
+    ll("15279772652","ca8c80a7b293cb1bbc932ebe4b66604d","刘梨"),
+    cxd("15170252724","0655f9034673a6264902e7981180ef0d","蔡辛迪")
     ;
 
     public static Map<String, Info> infoMap = new HashMap<>();

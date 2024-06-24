@@ -35,16 +35,10 @@ public class TakeGoldPro {
 
 	public static String token = Info.cxd.getToken();
 	public static String phone = Info.cxd.getPhone();
-	public static String name = "蔡辛迪";
-	public static boolean flag = false;
-	public static Map<String,List> recode = new HashMap();
+	public static String name = "辛迪";
 
 
-	public static void main(String[] args) throws IOException {
 
-		start();
-
-	}
 
 	static {
 		InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("enable.txt");
@@ -95,11 +89,8 @@ public class TakeGoldPro {
 
 	private static void log() {
 
-		if (flag) {
 
-			takeTotal = takeTotal + (Integer) recode.get(name).get(0);
-			currentTotal = currentTotal + (Double) recode.get(name).get(1);
-			balance = (Double) recode.get(name).get(2);
+
 
 			StringBuilder sb = new StringBuilder();
 			sb.append(name);
@@ -110,13 +101,7 @@ public class TakeGoldPro {
 			Log.get().info(sb.toString());
 
 //			sendWeChar(sb);
-		}else {
-			List list = new ArrayList<>();
-			list.add(takeTotal);
-			list.add(currentTotal);
-			list.add(balance);
-			recode.put(name,list);
-		}
+
 
 	}
 
@@ -265,12 +250,12 @@ public class TakeGoldPro {
 
 			String cellphone = item.getStr("cellphone");
 
-			if (availableFlowCoin>4.5 && !cellphone.equals(phone)){
+			if (availableFlowCoin>3 && !cellphone.equals(phone)){
 
 				String code = takeGold(cellphone);
-				if (!"0".equals(code)){
-					code = takeGold(cellphone);
-				}
+//				if (!"0".equals(code)){
+//					code = takeGold(cellphone);
+//				}
 			}
 		}
 
