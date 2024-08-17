@@ -40,6 +40,7 @@ public class TakeGoldPro {
 
 
 
+
 	static {
 		InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("enable.txt");
 
@@ -88,20 +89,14 @@ public class TakeGoldPro {
 	}
 
 	private static void log() {
-
-
-
-
 			StringBuilder sb = new StringBuilder();
 			sb.append(name);
-			sb.append(":\n捡了【"+takeTotal+"】次\n");
-			sb.append("本次共捡金币【"+currentTotal+"】\n");
-			sb.append("当前总金币【"+balance+"】\n");
-
+			sb.append(":\n捡了【"+takeTotal.doubleValue()+"】次\n");
+			sb.append("本次共捡金币【"+currentTotal.doubleValue()+"】\n");
+			sb.append("当前总金币【"+balance.doubleValue()+"】\n");
 			Log.get().info(sb.toString());
 
 //			sendWeChar(sb);
-
 
 	}
 
@@ -159,6 +154,31 @@ public class TakeGoldPro {
 			currentTotal += getedFlow;
 		}
 		return con.getStr("resultCode");
+	}
+
+	// 兑换金币
+	public static String exchange(String count, Info info) {
+		JSONObject json = new JSONObject();
+		json.set("msgType", "2.78.1");
+		json.set("version", "1|138");
+		json.set("createTime", DateUtil.now());
+		JSONObject content = new JSONObject();
+		JSONObject content2 = new JSONObject();
+		content2.set("accessToken", info.getToken());
+		content2.set("cellphone", info.getPhone());
+		content2.set("exchangeCount", count);
+		content2.set("veriSmsTransId", "79010050631326");
+		content.set("content", content2);
+		json.set("content", content);
+		HttpRequest post = HttpUtil.createPost("https://woxin2.jx139.com/interface/MsgPort");
+		post.header("interfaceCode", "2.78.1");
+		post.body(json.toJSONString(0));
+
+		HttpResponse execute = post.execute();
+		String body = execute.body();
+		com.alibaba.fastjson2.JSONObject result = com.alibaba.fastjson2.JSONObject.parseObject(body);
+		return result.getJSONObject("content").getString("resultMsg");
+//		return null;
 	}
 
 	public static String openBox() {
@@ -250,7 +270,7 @@ public class TakeGoldPro {
 
 			String cellphone = item.getStr("cellphone");
 
-			if (availableFlowCoin>3 && !cellphone.equals(phone)){
+			if (availableFlowCoin>4 && !cellphone.equals(phone)){
 
 				String code = takeGold(cellphone);
 //				if (!"0".equals(code)){
