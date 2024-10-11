@@ -3,3 +3,9 @@ server:
 spring:
   application:
     name: myTool
+
+job:
+  cron: 0 0 9,14 * * ?
+takeNum: 2
+llToken: b59e10c8d911d4bcf06ba61dd0118524
+cxdToken: 0655f9034673a6264902e7981180ef0d

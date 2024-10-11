@@ -1,3 +1,7 @@
+com\cxd\cmcc\controller\TakeController.class
 com\cxd\cmcc\Info.class
+com\cxd\MyToolApplication.class
+com\cxd\cmcc\vo\RecMsgVo.class
+com\cxd\cmcc\vo\MsgResponse.class
 com\cxd\cmcc\TakeGoldPro.class
 com\cxd\scheduler\TakeGoldScheduler.class

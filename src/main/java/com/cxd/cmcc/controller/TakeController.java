@@ -1,15 +1,13 @@
 package com.cxd.cmcc.controller;
 
 import cn.hutool.log.Log;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.cxd.cmcc.Info;
 import com.cxd.cmcc.TakeGoldPro;
 import com.cxd.cmcc.vo.MsgResponse;
 import com.cxd.cmcc.vo.RecMsgVo;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
@@ -25,6 +23,8 @@ import java.util.List;
 public class TakeController {
     Log log = Log.get();
 
+    @Value("${takeNum}")
+    Double takeNum;
     @RequestMapping("/take/{user}")
     public String takeGold(@PathVariable String user) throws IOException {
         switch (user){
@@ -42,7 +42,7 @@ public class TakeController {
             }
 
         }
-        TakeGoldPro.start();
+        TakeGoldPro.start(takeNum);
 
         StringBuilder builder = new StringBuilder();
         String s ;
@@ -50,11 +50,11 @@ public class TakeController {
         if ((s=TakeGoldPro.getMsg()) !=null){
             builder.append(TakeGoldPro.name+":【"+s+"】\n");
         }
-        builder.append(TakeGoldPro.name+":捡了【"+TakeGoldPro.takeTotal.doubleValue()+"】次\n");
-        builder.append("本次共捡金币【"+TakeGoldPro.currentTotal.doubleValue()+"】\n");
-        builder.append("当前总金币【"+TakeGoldPro.balance.doubleValue()+"】");
+        builder.append(TakeGoldPro.name+":捡了【"+TakeGoldPro.takeTotal.intValue()+"】次\n");
+        builder.append("本次共捡金币【"+ TakeGoldPro.currentTotal.intValue() +"】\n");
+        builder.append("当前总金币【"+TakeGoldPro.balance.intValue()+"】");
 
-        TakeGoldPro.sendWeChar(TakeGoldPro.name,builder.toString());
+//        TakeGoldPro.sendWeChar(TakeGoldPro.name,builder.toString());
 
         TakeGoldPro.takeTotal = 0;
         TakeGoldPro.currentTotal = 0d;
@@ -73,8 +73,8 @@ public class TakeController {
             String[] split = content.split(" ");
             if (list.contains(split[0])){
                 log.info("兑换{}金币",content);
-                String result = TakeGoldPro.exchange(content, Info.infoMap.get(split[1]));
-
+                String result = TakeGoldPro.exchange(split[0], Info.infoMap.get(split[1]));
+                Log.get().info(result);
 
                 return MsgResponse.resp(true,result);
             }
@@ -88,7 +88,9 @@ public class TakeController {
                 StringBuilder sb = new StringBuilder();
                 sb.append("输入【捡金币y】,y为名字拼音\n");
                 sb.append("输入【Vx y】,x为兑换金币数量,y为名字拼音\n");
-                return MsgResponse.resp(true,sb.toString());
+                String string = sb.toString();
+                log.info(string);
+                return MsgResponse.resp(true, string);
 
             }
 
@@ -96,6 +98,7 @@ public class TakeController {
 
 
         MsgResponse msgResponse = new MsgResponse();
+//        return MsgResponse.resp(true, recMsg.getContent());
         return msgResponse;
     }
 

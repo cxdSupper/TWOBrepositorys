@@ -8,6 +8,7 @@ import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import cn.hutool.log.Log;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.util.*;
@@ -17,6 +18,7 @@ import java.util.*;
  * @date 2023/9/22
  * @desc
  */
+@Component
 public class TakeGoldPro {
 	public static List<String> allPhone= new ArrayList();
 	// 本次捡金币数
@@ -24,6 +26,8 @@ public class TakeGoldPro {
 	public static Integer takeTotal = 0;
 	// 当前总金币数
 	public static Double balance = 0d;
+
+	static Double takeNum;
 
 	public static String getMsg() {
 		String s =msg;
@@ -64,8 +68,11 @@ public class TakeGoldPro {
 		}
 	}
 
-	public static void start() throws IOException {
+	public static void start(Double number) throws IOException {
+		takeNum = number;
 		openBox();
+		takeFood();
+		weishi();
 
 		ArrayList<String> itemList = new ArrayList<>();
 		try {
@@ -177,8 +184,53 @@ public class TakeGoldPro {
 		HttpResponse execute = post.execute();
 		String body = execute.body();
 		com.alibaba.fastjson2.JSONObject result = com.alibaba.fastjson2.JSONObject.parseObject(body);
-		return result.getJSONObject("content").getString("resultMsg");
+		String string = result.getJSONObject("content").getString("resultMsg");
+		return string;
 //		return null;
+	}
+	public static void weishi( ) {
+		JSONObject json = new JSONObject();
+		json.set("msgType", "14.60.1");
+		json.set("version", "1|138");
+		json.set("createTime", DateUtil.now());
+		JSONObject content = new JSONObject();
+		JSONObject content2 = new JSONObject();
+		content2.set("accessToken", token);
+		content2.set("cellphone", phone);
+		content2.set("num", "1");
+		content2.set("food", "1");
+		content.set("content", content2);
+		json.set("content", content);
+		HttpRequest post = HttpUtil.createPost("https://woxin2.jx139.com/interface/MsgPort");
+		post.header("interfaceCode", "14.60.1");
+		post.body(json.toJSONString(0));
+
+		HttpResponse execute = post.execute();
+		String body = execute.body();
+	}
+	// 捡食物
+	public static void takeFood( ) {
+		JSONObject json = new JSONObject();
+		json.set("msgType", "14.65.1");
+		json.set("version", "1|138");
+		json.set("createTime", DateUtil.now());
+		JSONObject content = new JSONObject();
+		JSONObject content2 = new JSONObject();
+		content2.set("accessToken", token);
+		content2.set("cellphone", phone);
+		content2.set("taskCode", "101");
+		content2.set("awardNum", "180");
+		content2.set("awardCode", "1");
+		content2.set("flag", 0);
+		content.set("content", content2);
+		json.set("content", content);
+		HttpRequest post = HttpUtil.createPost("https://woxin2.jx139.com/interface/MsgPort");
+		post.header("interfaceCode", "14.65.1");
+		post.body(json.toJSONString(0));
+
+		HttpResponse execute = post.execute();
+		String body = execute.body();
+		System.out.println(body);
 	}
 
 	public static String openBox() {
@@ -270,7 +322,7 @@ public class TakeGoldPro {
 
 			String cellphone = item.getStr("cellphone");
 
-			if (availableFlowCoin>4 && !cellphone.equals(phone)){
+			if (availableFlowCoin>takeNum && !cellphone.equals(phone)){
 
 				String code = takeGold(cellphone);
 //				if (!"0".equals(code)){
