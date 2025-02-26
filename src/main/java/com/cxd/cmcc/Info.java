@@ -9,7 +9,7 @@ import java.util.Map;
  * @desc
  */
 public enum Info {
-    ll("15279772652","b59e10c8d911d4bcf06ba61dd0118524","ll"),
+    ll("15279772652","ca8c80a7b293cb1bbc932ebe4b66604d","ll"),
     cxd("15170252724","0655f9034673a6264902e7981180ef0d","cxd")
     ;
 

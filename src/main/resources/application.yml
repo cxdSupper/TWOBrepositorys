@@ -7,5 +7,5 @@ spring:
 job:
   cron: 0 0 9,14 * * ?
 takeNum: 2
-llToken: b59e10c8d911d4bcf06ba61dd0118524
+llToken: ca8c80a7b293cb1bbc932ebe4b66604d
 cxdToken: 0655f9034673a6264902e7981180ef0d

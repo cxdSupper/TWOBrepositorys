@@ -35,7 +35,7 @@ public class TakeGoldScheduler  {
     @Scheduled(cron = "${job.cron}")
     public void takeGold() throws IOException {
         for (Map.Entry<String, Info> entry : Info.infoMap.entrySet()) {
-            Log.get().info("userã€{}ã€‘æ¡é‡‘å¸å¼€å§‹",entry.getValue().getName());
+            Log.get().info("user¡¾{}¡¿¼ñ½ğ±Ò¿ªÊ¼",entry.getValue().getName());
             TakeGoldPro.phone = entry.getValue().getPhone();
             TakeGoldPro.token = entry.getValue().getToken();
             TakeGoldPro.name = entry.getValue().getName();
@@ -47,22 +47,22 @@ public class TakeGoldScheduler  {
 
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         for (Map.Entry<String, Info> entry : Info.infoMap.entrySet()) {
-            Log.get().info("userã€{}ã€‘æ¡é‡‘å¸å¼€å§‹",entry.getValue().getName());
+            Log.get().info("user¡¾{}¡¿¼ñ½ğ±Ò¿ªÊ¼",entry.getValue().getName());
             TakeGoldPro.phone = entry.getValue().getPhone();
             TakeGoldPro.token = entry.getValue().getToken();
             TakeGoldPro.name = entry.getValue().getName();
-            TakeGoldPro.start(2d);
+            TakeGoldPro.start(1d);
             TakeGoldPro.takeTotal = 0;
             TakeGoldPro.currentTotal = 0d;
             TakeGoldPro.balance = 0d;
         }
+        /*for (int i = 0; i < 1; i++) {
+            System.out.println(TakeGoldPro.exchange("V200", Info.ll));
+            Thread.sleep(1000);
 
+        }*/
     }
 
-//    @Override
-//    public void run(String... args) throws Exception {
-//        takeGold();
-//    }
 }

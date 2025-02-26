@@ -102,4 +102,18 @@ public class TakeController {
         return msgResponse;
     }
 
+    @RequestMapping("setToken")
+    public String setToken(String name, String value) throws IOException {
+        if (name.equals(Info.ll.name())){
+            Info.ll.setToken(value);
+            return Info.ll.token;
+        }
+        if (name.equals(Info.cxd.name())){
+            Info.cxd.setToken(value);
+            return Info.cxd.token;
+        }
+        return "设置失败";
+
+    }
+
 }
