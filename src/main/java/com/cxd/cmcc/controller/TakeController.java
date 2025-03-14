@@ -1,16 +1,22 @@
 package com.cxd.cmcc.controller;
 
+import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.log.Log;
 import com.cxd.cmcc.Info;
 import com.cxd.cmcc.TakeGoldPro;
+import com.cxd.cmcc.util.SeleniumDynamicPage;
 import com.cxd.cmcc.vo.MsgResponse;
 import com.cxd.cmcc.vo.RecMsgVo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,6 +31,12 @@ public class TakeController {
 
     @Value("${takeNum}")
     Double takeNum;
+
+
+
+    @Autowired
+    SeleniumDynamicPage seleniumDynamicPage;
+
     @RequestMapping("/take/{user}")
     public String takeGold(@PathVariable String user) throws IOException {
         switch (user){
@@ -115,5 +127,34 @@ public class TakeController {
         return "设置失败";
 
     }
+
+    @RequestMapping("doSelenium")
+    public String doSelenium(String name) throws IOException {
+        ThreadUtil.execute(() -> {
+            seleniumDynamicPage.getLiulag(name);
+        });
+        return "ok";
+    }
+
+    @RequestMapping("changAuto")
+    public String changAuto(String name, String value){
+        SeleniumDynamicPage.autoSet.put(name, value);
+        return "ok";
+    }
+
+    @RequestMapping("getSmsImg")
+    public void getSmsImg(HttpServletResponse response) throws IOException {
+
+        FileInputStream fis = new FileInputStream("img.png");
+        byte data[] = new byte[ fis.available()];
+        fis.read(data); // 读数据
+        fis.close();
+
+        response.setContentType("image/jpeg");  // 设置返回的文件类型
+        OutputStream toClient = response.getOutputStream(); // 得到向客户端输出二进制数据的对象
+        toClient.write(data); // 输出数据
+        toClient.close();
+    }
+
 
 }

@@ -1,5 +1,6 @@
 package com.cxd.scheduler;
 
+import cn.hutool.http.HttpUtil;
 import cn.hutool.log.Log;
 import com.cxd.cmcc.Info;
 import com.cxd.cmcc.TakeGoldPro;
@@ -31,25 +32,16 @@ public class TakeGoldScheduler  {
     }
 
 
-
-    @Scheduled(cron = "${job.cron}")
+    @Scheduled(fixedRate = 1000 * 60 * 60 * 6)
     public void takeGold() throws IOException {
-        for (Map.Entry<String, Info> entry : Info.infoMap.entrySet()) {
-            Log.get().info("user°æ{}°øºÒΩ±“ø™ º",entry.getValue().getName());
-            TakeGoldPro.phone = entry.getValue().getPhone();
-            TakeGoldPro.token = entry.getValue().getToken();
-            TakeGoldPro.name = entry.getValue().getName();
-            TakeGoldPro.start(number);
-            TakeGoldPro.takeTotal = 0;
-            TakeGoldPro.currentTotal = 0d;
-            TakeGoldPro.balance = 0d;
-        }
+        HttpUtil.get("https://mytool.koyeb.app/take/ll");
+        HttpUtil.get("https://mytool.koyeb.app/take/cxd");
 
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
         for (Map.Entry<String, Info> entry : Info.infoMap.entrySet()) {
-            Log.get().info("user°æ{}°øºÒΩ±“ø™ º",entry.getValue().getName());
+            Log.get().info("„Äê{}„ÄëÊç°ÈáëÂ∏ÅÂºÄÂßã",entry.getValue().getName());
             TakeGoldPro.phone = entry.getValue().getPhone();
             TakeGoldPro.token = entry.getValue().getToken();
             TakeGoldPro.name = entry.getValue().getName();
