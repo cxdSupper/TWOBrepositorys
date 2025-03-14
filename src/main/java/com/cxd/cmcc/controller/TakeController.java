@@ -7,7 +7,6 @@ import com.cxd.cmcc.TakeGoldPro;
 import com.cxd.cmcc.util.SeleniumDynamicPage;
 import com.cxd.cmcc.vo.MsgResponse;
 import com.cxd.cmcc.vo.RecMsgVo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,7 +33,7 @@ public class TakeController {
 
 
 
-    @Autowired
+//    @Autowired
     SeleniumDynamicPage seleniumDynamicPage;
 
     @RequestMapping("/take/{user}")
