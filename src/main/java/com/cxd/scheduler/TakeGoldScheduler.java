@@ -32,11 +32,15 @@ public class TakeGoldScheduler  {
     }
 
 
-    @Scheduled(fixedRate = 1000 * 60 * 60 * 6)
+    @Scheduled(cron = "${job.cron}")
     public void takeGold() throws IOException {
         HttpUtil.get("https://mytool.koyeb.app/take/ll");
         HttpUtil.get("https://mytool.koyeb.app/take/cxd");
 
+    }
+    @Scheduled(fixedRate = 1000 * 60 * 60)
+    public void testJob() throws IOException {
+        System.out.println("测试");
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {

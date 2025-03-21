@@ -5,7 +5,7 @@ spring:
     name: myTool
 
 job:
-  cron: 0 10 1,8 * * ?
+  cron: 0 0 0/6 * * ?
 takeNum: 2
 llToken: ca8c80a7b293cb1bbc932ebe4b66604d
 cxdToken: 0655f9034673a6264902e7981180ef0d
