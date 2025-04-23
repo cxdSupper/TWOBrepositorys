@@ -1,5 +1,7 @@
 # 指定基础镜像
-FROM java:8-alpine
+FROM openjdk:8-jdk-alpine
+
+WORKDIR /app
 
 # 复制文件到镜像中
 COPY ./mytool.jar /tmp/mytool.jar
