@@ -156,4 +156,9 @@ public class TakeController {
     }
 
 
+    @RequestMapping("getTest")
+    public String getTest() throws IOException {
+        log.info("getTest");
+        return "ok";
+    }
 }

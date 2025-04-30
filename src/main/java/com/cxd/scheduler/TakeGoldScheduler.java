@@ -38,9 +38,23 @@ public class TakeGoldScheduler  {
         HttpUtil.get("https://mytool.koyeb.app/take/cxd");
 
     }
-    @Scheduled(fixedRate = 1000 * 60 * 60)
+    @Scheduled(fixedRate = 1000 * 60 * 10)
     public void testJob() throws IOException {
-        System.out.println("测试");
+        int millis = 1000 * 60;
+        int i = 1;
+
+        while (i<10) {
+            String s = HttpUtil.get("mytool.koyeb.app/getTest");
+
+            System.out.println(s);
+            i++;
+            try {
+                Thread.sleep(millis);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
