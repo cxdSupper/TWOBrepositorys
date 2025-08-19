@@ -20,7 +20,6 @@ public class AutoRedeemJob {
     @PostConstruct
     private void init() {
         HashSet<String> list = new HashSet<>();
-        list.add("cxd");
         Constant.setValue("autoList", list);
     }
 
