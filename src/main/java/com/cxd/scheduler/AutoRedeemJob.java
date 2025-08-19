@@ -21,6 +21,7 @@ public class AutoRedeemJob {
     private void init() {
         HashSet<String> list = new HashSet<>();
         Constant.setValue("autoList", list);
+        System.out.println("初始化自动兑换列表");
     }
 
     @Scheduled(cron = "0 20 7 * * ?")
