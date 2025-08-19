@@ -33,27 +33,17 @@ public class TakeGoldScheduler  {
 
 
     @Scheduled(cron = "${job.cron}")
-    public void takeGold() throws IOException {
+    public void takeGold() {
         HttpUtil.get("https://mytool.koyeb.app/take/ll");
         HttpUtil.get("https://mytool.koyeb.app/take/cxd");
 
     }
-    @Scheduled(fixedRate = 1000 * 60 * 10)
+    @Scheduled(cron = "0 0/2 * * * ?")
     public void testJob() throws IOException {
-        int millis = 1000 * 60;
-        int i = 1;
 
-        while (i<10) {
             String s = HttpUtil.get("mytool.koyeb.app/getTest");
 
             System.out.println(s);
-            i++;
-            try {
-                Thread.sleep(millis);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
 
     }
 
@@ -74,5 +64,6 @@ public class TakeGoldScheduler  {
 
         }*/
     }
+
 
 }
